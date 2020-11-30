@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>右键菜单修改</title>
+  <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_2237556_pbzs6qfwnqd.css">
+</head>
+
+<body>
+  <div id="app" ref="app" @contextmenu.prevent="showContextMenu" @click="hideContextMenu">
+    <div id="menu" v-show="contextMenuVisible" :style="contextMenuStyle">
+      <div v-for="listGroup in menu" class="menu-group" @click.stop.prevent @contextmenu.stop.prevent>
+        <div v-for="list in listGroup" class="menu-list" @click.stop.prevent="clickMenu(list)" @contextmenu.stop.prevent="clickMenu(list)">
+          <i v-if="list.icon" class="iconfont" v-bind:class="[list.icon]"></i>
+          <span>{{ list.text }}</span>
+          <i v-if="list.sub" class="sub"></i>
+          <ul v-if="list.sub" class="submenu":style="subMenuStyle">
+            <li v-for="li in list.sub" @click.stop.prevent="clickMenu(li)">{{ li }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="tips" v-show="showTips">{{ tips }}</div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        contextMenuVisible: false,
+        showTips: false,
+        tips: '',
+        messageTimer: null,
+        contextMenuStyle: {
+          left: 0,
+          top: 0
+        },
+        subMenuStyle: {},
+        menu: [
+          [
+            {text: '返回'},
+            {text: '前进'},
+            {text: '重新加载'}
+          ],
+          [
+            {text: '另存为'},
+            {text: '打印'},
+            {text: '投射'}
+          ],
+          [
+            {text: '发送到手机', icon: 'icon-fasongdaoshoujiyulan', sub: ['HUAWEI P90 Pro +', 'HUAWEI 电话机', 'iPhone 13 Pro Max']},
+            {text: '翻译成中文', icon: 'icon-ic_translate_px'}
+          ],
+          [
+            {text: '创建截图', icon: 'icon-screenshotjt', sub: ['页面可见部分', '选择区域', '滚动截图', '整个页面']},
+            {text: '为此页面生成二维码', icon: 'icon-shengchengerweima'},
+            {text: '功能1'},
+            {text: '功能2'}
+          ]
+        ]
+      },
+      methods: {
+        showContextMenu(e) {
+          this.contextMenuVisible = true
+          this.contextMenuStyle = {
+            left: e.clientX <= this.$refs.app.clientWidth - 242 ? e.clientX + 'px' : this.$refs.app.clientWidth - 242 + 'px',
+            top: e.clientY <= this.$refs.app.clientHeight - 345 ? e.clientY + 'px' : e.clientY - 345 + 'px'
+          };
+          this.subMenuStyle = {
+            left: e.clientX <= this.$refs.app.clientWidth - 400 ? 235 + 'px' : -160 + 'px'
+          }
+        },
+
+        hideContextMenu(e) {
+          this.contextMenuVisible = false
+        },
+
+        clickMenu(item) {
+          if (item.sub && item.text) return
+          this.contextMenuVisible = false
+          this.showMessage(item.text || item, 2000)
+        },
+
+        showMessage(msg, time) {
+          this.showTips = true
+          this.tips = msg
+          if (this.messageTimer) {
+            clearTimeout(this.messageTimer);
+            this.messageTimer = null;
+          }
+          this.messageTimer = setTimeout(() => {
+            this.showTips = false
+          }, time);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+}
+
+#menu {
+  width: 240px;
+  height: auto;
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 4px #888;
+  position: absolute;
+  cursor: default;
+  user-select: none;
+  padding: 5px 0;
+  z-index: 999;
+  background-color: #fff;
+}
+
+.menu-group {
+  width: auto;
+  height: auto;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+
+.menu-group:last-child {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list {
+  width: 200px;
+  height: 25px;
+  line-height: 25px;
+  padding-left: 40px;
+  font-size: 13px;
+  position: relative;
+}
+
+.menu-list:hover {
+  background-color: #c8c8c8;
+}
+
+.menu-list .sub {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-color: transparent transparent transparent #555;
+}
+
+.menu-list .iconfont {
+  position: absolute;
+  left: 12px;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.menu-list .submenu {
+  display: none;
+  position: absolute;
+  top: -6px;
+  z-index: 999;
+  list-style: none;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  width: 160px;
+  padding: 5px 0;
+  box-shadow: 3px 3px 4px #888;
+}
+
+.menu-list:hover .submenu {
+  display: block;
+}
+
+.menu-list .submenu li {
+  color: #000;
+  display: block;
+  padding: 0 20px;
+  width: auto;
+}
+
+.menu-list .submenu li:hover {
+  background-color: #c8c8c8;
+}
+
+.tips {
+  height: 50px;
+  line-height: 50px;
+  width: 300px;
+  text-align: center;
+  color: #333;
+  font-size: 18px;
+  font-weight: 400;
+  background-color: rgba(255, 253, 137, 0.8);
+  border: 1px solid rgba(247, 255, 137, 1);
+  border-radius: 6px;
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  margin-left: -150px;
+}
